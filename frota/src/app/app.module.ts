@@ -9,10 +9,11 @@ import { HomeComponent } from './containers/home/home.component';
 
 import {SharedModule} from './shared/shared.module';
 import {HttpClientModule} from '@angular/common/http';
-import {MatPaginatorIntl} from '@angular/material';
-//import {MatPaginatorConf} from './settings/mat.paginator.conf';
+// import {MatPaginatorIntl} from '@angular/material';
+// import {MatPaginatorConf} from './settings/mat.paginator.conf';
 import {registerLocaleData} from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
+import { LinhasOnibusComponent } from './containers/linhas-onibus/linhas-onibus.component';
 
 registerLocaleData(ptBr);
 
@@ -20,7 +21,9 @@ registerLocaleData(ptBr);
   declarations: [
     AppComponent,
 
-    HomeComponent
+    HomeComponent,
+
+    LinhasOnibusComponent
   ],
   imports: [
     HttpClientModule,
@@ -30,7 +33,7 @@ registerLocaleData(ptBr);
     SharedModule.forRoot()
   ],
   providers: [
-  //  {provide: MatPaginatorIntl, useClass: MatPaginatorConf},
+    // {provide: MatPaginatorIntl, useClass: MatPaginatorConf},
     {provide: LOCALE_ID, useValue: 'pt-PT'},
   ],
   bootstrap: [AppComponent]

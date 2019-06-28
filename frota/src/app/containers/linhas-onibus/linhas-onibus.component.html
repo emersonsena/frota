@@ -1,0 +1,48 @@
+<mat-card class="card">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+      O tempo Limite da Api foi atingido. Atualize a página novamente.
+    </div>
+  </div>
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+      <td mat-cell *matCellDef="let row"> {{row.codigo}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+      <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
+    </ng-container>
+
+    <!-- Color Column -->
+    <!-- <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
+    </ng-container> -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+</mat-card>
