@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HomeComponent } from './containers/home/home.component';
+//
 
 import {SharedModule} from './shared/shared.module';
 import {HttpClientModule} from '@angular/common/http';
@@ -14,6 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {registerLocaleData} from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { LinhasOnibusComponent } from './containers/linhas-onibus/linhas-onibus.component';
+import { LinhasLotacaoComponent } from './containers/linhas-lotacao/linhas-lotacao.component';
 
 registerLocaleData(ptBr);
 
@@ -21,13 +22,13 @@ registerLocaleData(ptBr);
   declarations: [
     AppComponent,
 
-    HomeComponent,
-
+    LinhasLotacaoComponent,
     LinhasOnibusComponent
   ],
   imports: [
-    HttpClientModule,
+
     BrowserModule,
+      HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule.forRoot()

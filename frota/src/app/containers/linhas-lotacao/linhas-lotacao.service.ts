@@ -7,14 +7,14 @@ import{LinhaOnibus} from '../../core/models/LinhaOnibus.model';
 @Injectable({
   providedIn: 'root'
 })
-export class LinhasOnibusService {
+export class LinhasLotacaoService {
 
   basePath = 'http://www.poatransporte.com.br/php/facades/process.php';
 
   constructor(private httpClient: HttpClient) { }
 
-  getLinhasOnibus(): Observable<any> {
-    const href = `${this.basePath}?a=nc&p=%&t=o`;
+  getLinhasLotacao(): Observable<any> {
+    const href = `${this.basePath}?a=nc&p=%&t=l`;
     return this.httpClient.get<Array<LinhaOnibus>>(href);
   }
 

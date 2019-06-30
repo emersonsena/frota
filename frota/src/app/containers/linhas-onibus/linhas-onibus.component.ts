@@ -1,10 +1,10 @@
 import { Component, OnInit,AfterViewInit, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material/table';
+import {LinhasOnibusService} from './linhas-onibus.service';
 
 @Component({
   selector: 'app-linhas-onibus',
@@ -12,10 +12,8 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./linhas-onibus.component.css']
 })
 export class LinhasOnibusComponent implements OnInit,AfterViewInit {
-   displayedColumns: string[] = ['id', 'codigo', 'nome'];
-   exampleDatabase: ExampleHttpDatabase | null;
+   displayedColumns: string[] = ['id', 'codigo', 'nome','acoes'];
    dataSource: MatTableDataSource<any>;
-
    resultsLength = 0;
    isLoadingResults = true;
    isRateLimitReached = false;
@@ -23,7 +21,10 @@ export class LinhasOnibusComponent implements OnInit,AfterViewInit {
    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
    @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-   constructor(private httpClient: HttpClient) {}
+   constructor(
+     private linhasOnibusService:LinhasOnibusService
+
+   ) {}
 
 
    ngOnInit() {
@@ -35,50 +36,19 @@ export class LinhasOnibusComponent implements OnInit,AfterViewInit {
 
    ngAfterViewInit() {
 
-     this.exampleDatabase = new ExampleHttpDatabase(this.httpClient);
+     this.linhasOnibusService!.getLinhasOnibus().subscribe(data => {
 
-     // If the user changes the sort order, reset back to the first page.
-     //this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
-     this.exampleDatabase!.getRepoIssues().subscribe(data => {
-
-        this.dataSource.data = data;
+       this.dataSource.data = data;
        this.isLoadingResults = false;
-       console.log("dadasdasd",data);
 
 
      }),catchError(() => {
            this.isLoadingResults = false;
-           // Catch if the GitHub API has reached its rate limit. Return empty data.
+           // Catch if the  API has reached its rate limit. Return empty data.
            this.isRateLimitReached = true;
            return observableOf([]);
          })
 
-
-
-     // merge(this.sort.sortChange, this.paginator.page)
-     //   .pipe(
-     //     startWith({}),
-     //     switchMap(() => {
-     //       this.isLoadingResults = true;
-     //       return this.exampleDatabase!.getRepoIssues(
-     //         this.sort.active, this.sort.direction, this.paginator.pageIndex);
-     //     }),
-     //     map(data => {
-     //       // Flip flag to show that loading has finished.
-     //       this.isLoadingResults = false;
-     //       this.isRateLimitReached = false;
-     //       this.resultsLength = data.total_count;
-     //
-     //       return data.items;
-     //     }),
-     //     catchError(() => {
-     //       this.isLoadingResults = false;
-     //       // Catch if the GitHub API has reached its rate limit. Return empty data.
-     //       this.isRateLimitReached = true;
-     //       return observableOf([]);
-     //     })
-     //   ).subscribe(data => this.data = data);
    }
 
    applyFilter(filterValue: string) {
@@ -88,6 +58,30 @@ export class LinhasOnibusComponent implements OnInit,AfterViewInit {
          this.dataSource.paginator.firstPage();
        }
       }
+
+   consultaItinerario(row){
+
+      this.linhasOnibusService!.getItinerario(row.id).subscribe(data => {
+
+       //  this.dataSource.data = data;
+
+      // console.log("dadasdasd",data[0]);
+       //https://www.google.com/maps/?q=LATITUDE,LONGITUDE
+
+       const href = `https://www.google.com/maps/?q=${data[0].lat},${data[0].lng}`
+        window.open(href);
+         this.isLoadingResults = false;
+      // this.exampleDatabase!.linkGoogleMaps(data[0].lat,data[0].lng);
+
+
+     }),catchError(() => {
+          this.isLoadingResults = false;
+        //   Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+           return observableOf([]);
+         })
+
+   }
  }
 
  // export interface GithubApi {
@@ -102,32 +96,54 @@ export class LinhasOnibusComponent implements OnInit,AfterViewInit {
  //   title: string;
  // }
 
- export interface DataPoaApi {
-   items: Linhas[];
-   //total_count: number;
- }
-
- export interface Linhas {
-   id: string;
-   codigo: string;
-   nome: string;
-
- }
+ // export interface DataPoaApi {
+ //   items: Linhas[];
+ //   //total_count: number;
+ // }
+ //
+ // export interface Linhas {
+ //   id: string;
+ //   codigo: string;
+ //   nome: string;
+ //
+ // }
 
  /** An example database that the data source uses to retrieve data for the table. */
- export class ExampleHttpDatabase {
-   constructor(private httpClient: HttpClient) {
-     // this._httpClient.get('http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o').subscribe(data=>{
-     //   console.log("data", data);
-     // })
-   }
+ // export class ExampleHttpDatabase {
+ //   constructor(private httpClient: HttpClient) {
+ //     // this._httpClient.get('http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o').subscribe(data=>{
+ //     //   console.log("data", data);
+ //     // })
+ //   }
 
-   getRepoIssues(): Observable<any> {
-     const href = 'http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o';
-     return this.httpClient.get<Array<Linhas>>(href);
+   // getLinhasOnibus(): Observable<any> {
+   //   const href = 'http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o';
+   //   return this.httpClient.get<Array<Linhas>>(href);
+   //
+   //
+   // }
 
 
-   }
+
+    // getItinerário(id){
+    //   const href = `http://www.poatransporte.com.br/php/facades/process.php?a=il&p=${id}`;
+    //   return this.httpClient.get<any>(href);
+    //
+    // }
+
+
+
+     // linkGoogleMaps(lat,long): any{
+     //   console.log("link", lat, long);
+     //   const href = `https://www.google.com/maps/?q=${lat},${long}`;
+     //   return this.httpClient.post<any>(href);
+     //
+     // }
+
+
+
+
+
 
   //  getRepoIssues(sort: string, order: string, page: number): Observable<DataPoaApi> {
   //    const href = 'http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o';
@@ -140,4 +156,4 @@ export class LinhasOnibusComponent implements OnInit,AfterViewInit {
   //  }
 
 
-}
+//}

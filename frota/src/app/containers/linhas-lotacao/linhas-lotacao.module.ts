@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {HomeComponent} from './home.component';
+import {LinhasLotacaoComponent} from './linhas-lotacao.component';
  import {SharedModule} from '../../shared/shared.module';
  //import {RouterModule, Routes} from '@angular/router';
 
 @NgModule({
-  declarations: [HomeComponent],
-  exports:[HomeComponent],
+  declarations: [LinhasLotacaoComponent],
+  exports:[LinhasLotacaoComponent],
   imports: [
     CommonModule,
     SharedModule,
      ]
 })
-export class HomeModule { }
+export class LinhasLotacaoModule { }
