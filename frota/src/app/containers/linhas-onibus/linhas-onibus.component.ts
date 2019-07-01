@@ -5,6 +5,7 @@ import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material/table';
 import {LinhasOnibusService} from './linhas-onibus.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-linhas-onibus',
@@ -22,7 +23,8 @@ export class LinhasOnibusComponent implements OnInit,AfterViewInit {
    @ViewChild(MatSort, {static: true}) sort: MatSort;
 
    constructor(
-     private linhasOnibusService:LinhasOnibusService
+     private linhasOnibusService:LinhasOnibusService,
+    private router: Router,
 
    ) {}
 
@@ -61,25 +63,24 @@ export class LinhasOnibusComponent implements OnInit,AfterViewInit {
 
    consultaItinerario(row){
 
-      this.linhasOnibusService!.getItinerario(row.id).subscribe(data => {
+     this.router.navigate(['/itinerario',row.id]);
 
-       //  this.dataSource.data = data;
-
-      // console.log("dadasdasd",data[0]);
-       //https://www.google.com/maps/?q=LATITUDE,LONGITUDE
-
-       const href = `https://www.google.com/maps/?q=${data[0].lat},${data[0].lng}`
-        window.open(href);
-         this.isLoadingResults = false;
-      // this.exampleDatabase!.linkGoogleMaps(data[0].lat,data[0].lng);
-
-
-     }),catchError(() => {
-          this.isLoadingResults = false;
-        //   Catch if the GitHub API has reached its rate limit. Return empty data.
-          this.isRateLimitReached = true;
-           return observableOf([]);
-         })
+     //  this.linhasOnibusService!.getItinerario(row.id).subscribe(data => {
+     //
+     //    console.log("data",data);
+     //
+     //   const href = `https://www.google.com/maps/?q=${data[0].lat},${data[0].lng}`
+     //    window.open(href);
+     //     this.isLoadingResults = false;
+     //  // this.exampleDatabase!.linkGoogleMaps(data[0].lat,data[0].lng);
+     //
+     //
+     // }),catchError(() => {
+     //      this.isLoadingResults = false;
+     //    //   Catch if the GitHub API has reached its rate limit. Return empty data.
+     //      this.isRateLimitReached = true;
+     //       return observableOf([]);
+     //     })
 
    }
  }
