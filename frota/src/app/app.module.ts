@@ -14,8 +14,8 @@ import {registerLocaleData} from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
 import { LinhasOnibusComponent } from './containers/linhas-onibus/linhas-onibus.component';
 import { LinhasLotacaoComponent } from './containers/linhas-lotacao/linhas-lotacao.component';
-import { ItinerarioComponent } from './containers/itinerario/itinerario.component';
 
+import { ItinerarioComponent } from './containers/itinerario/itinerario.component';
 
 
 registerLocaleData(ptBr);
@@ -26,7 +26,8 @@ registerLocaleData(ptBr);
 
     LinhasLotacaoComponent,
     LinhasOnibusComponent,
-    ItinerarioComponent,
+
+   ItinerarioComponent,
 
   ],
   imports: [
@@ -38,7 +39,6 @@ registerLocaleData(ptBr);
     SharedModule.forRoot()
   ],
   providers: [
-
     // {provide: MatPaginatorIntl, useClass: MatPaginatorConf},
     {provide: LOCALE_ID, useValue: 'pt-PT'},
   ],

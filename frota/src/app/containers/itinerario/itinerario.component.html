@@ -6,7 +6,7 @@
       O tempo Limite da Api foi atingido. Atualize a página novamente.
     </div>
   </div>
-  <h2 class="cor-h2">Itinerário:  ID da Linha: {{ idLinha }} /  código: {{codigo}}  /  Nome: {{ nome }}</h2>
+  <h2 class="cor-h2">Itinerário linha: {{idLinha}}  / código : {{codigo}}  /  nome : {{nome}} </h2>
 <mat-form-field>
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
@@ -15,30 +15,24 @@
 
   <table mat-table [dataSource]="dataSource" matSort>
 
-    <!-- ID Column -->
-    <!-- <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-    </ng-container> -->
 
-    <!-- Progress Column -->
+    <!-- latitude Column -->
     <ng-container matColumnDef="lat">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Latitutde </th>
-      <td mat-cell *matCellDef="let row"> {{row.lat}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Latitude </th>
+      <td mat-cell *matCellDef="let row"> {{row?.lat}} </td>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- longitude Column -->
     <ng-container matColumnDef="lng">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Longitude </th>
-      <td mat-cell *matCellDef="let row"> {{row.lng}} </td>
+      <td mat-cell *matCellDef="let row"> {{row?.lng}} </td>
     </ng-container>
 
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
-      <td mat-cell *matCellDef="let row"><button matTooltip="ver no google maps" (click)="posicaoMaps(row)" mat-icon-button aria-label="Example icon-button with a location icon">
+      <td mat-cell *matCellDef="let row"><button matTooltip="consultar google maps" (click)="irParaMaps(row)" mat-icon-button aria-label="Example icon-button with a maps icon">
         <mat-icon color="primary">place</mat-icon></button> </td>
     </ng-container>
-
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;">

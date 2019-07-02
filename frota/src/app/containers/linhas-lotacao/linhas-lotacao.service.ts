@@ -18,9 +18,4 @@ export class LinhasLotacaoService {
     return this.httpClient.get<Array<LinhaOnibus>>(href);
   }
 
-   getItinerario(id){
-     const href = `${this.basePath}?a=il&p=${id}`;
-     return this.httpClient.get<any>(href);
-
-   }
 }

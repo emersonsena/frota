@@ -18,24 +18,24 @@
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+      <td mat-cell *matCellDef="let row"> {{row?.id}} </td>
     </ng-container>
 
     <!-- Progress Column -->
     <ng-container matColumnDef="codigo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
-      <td mat-cell *matCellDef="let row"> {{row.codigo}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th>
+      <td mat-cell *matCellDef="let row"> {{row?.codigo}} </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="nome">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
-      <td mat-cell *matCellDef="let row"> {{row.nome}} </td>
+      <td mat-cell *matCellDef="let row"> {{row?.nome}} </td>
     </ng-container>
 
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Ações </th>
-      <td mat-cell *matCellDef="let row"><button matTooltip="consultar itinenário" (click)="consultaItinerario(row)" mat-icon-button aria-label="Example icon-button with a heart icon">
+      <td mat-cell *matCellDef="let row"><button matTooltip="consultar itinenário" (click)="listaItinerario(row)" mat-icon-button aria-label="Example icon-button with a heart icon">
         <mat-icon color="primary">directions_bus</mat-icon></button> </td>
     </ng-container>
 

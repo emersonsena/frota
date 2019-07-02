@@ -5,7 +5,7 @@ export class Itinerario {
     public codigo: string,
     public idlinha: string,
     public nome: string,
-    public localizacao: Array<Localizacao>
+    public localizacao: Localizacao
   ) {
   }
 }
